@@ -4,7 +4,6 @@ logs/
 npm-debug.log*
 public/targetXML/
 .vscode/
-dist/
 build/
 .idea/
 yarn.lock

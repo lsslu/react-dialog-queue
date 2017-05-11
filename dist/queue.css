@@ -1,0 +1,23 @@
+.dialog-queue {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: none;
+}
+.dialog-queue.show {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dialog {
+  border: 1px solid #000;
+  background-color: #FFF;
+}
+.dialog.show {
+  display: block;
+}
+.dialog.hide {
+  display: none;
+}
