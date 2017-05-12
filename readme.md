@@ -59,3 +59,9 @@
     }
   }
 ```
+
+
+### DialogTrigger 属性
+- type: 'show' | 'open' | 'close'
+- cmpt: 关联的Dialog组件类
+- data: 传给Dialog组件的数据，键值对
