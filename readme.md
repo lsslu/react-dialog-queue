@@ -1,7 +1,7 @@
 #### 用途：
 用以全局管理react项目中的弹出框，保持前台始终只显示一个弹出框。
 
-### 用法：
+#### 用法：
 - 初始化reducer时注入dialogReducer
 ```javascript
   const reducers = combineReducers({
@@ -61,7 +61,7 @@
 ```
 
 
-### DialogTrigger 属性
+#### DialogTrigger 属性
 - type: 'show' | 'open' | 'close'
 - cmpt: 关联的Dialog组件类
 - data: 传给Dialog组件的数据，键值对
