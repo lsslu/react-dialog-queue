@@ -16,14 +16,17 @@ function dialog(state = Map({stack: List()}), action) {
       });
       return state.set('stack', newStack);
     }
-    
+
     case CLOSEDIALOG: {
+      if(action.isCloseAll) {
+        return state.set('stack', List());
+      }
       return state.set('stack', state.get('stack').pop());
     }
-    
+
     default: {
       return state;
-    } 
+    }
   }
 }
 

@@ -65,3 +65,11 @@
 - type: 'show' | 'open' | 'close'
 - cmpt: 关联的Dialog组件类
 - data: 传给Dialog组件的数据，键值对
+
+
+
+### 关闭Dialog
+```javascript
+<DialogTrigger type="close">close dialog</DialogTrigger>
+<DialogTrigger type="close" all>close all dialog</DialogTrigger>
+```
