@@ -8,8 +8,9 @@ export function showDialog(cmpt, data) {
   };
 }
 
-export function closeDialog() {
+export function closeDialog(isCloseAll) {
   return {
-    type: CLOSEDIALOG
+    type: CLOSEDIALOG,
+    isCloseAll
   };
 }

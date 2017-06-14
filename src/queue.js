@@ -39,21 +39,21 @@ class DialogQueue extends React.Component {
 }
 
 class DialogTrigger extends React.Component {
-  showDialog() {
+  showDialog = () => {
     const { cmpt, data } = this.props;
     this.props.showDialog(cmpt, data);
-  }
+  };
 
-  closeDialog() {
-    this.props.closeDialog();
-  }
+  closeDialog = () => {
+    this.props.closeDialog(!!this.props.all);
+  };
 
   render() {
-    const { type, className } = this.props;
+    const { type, className, all } = this.props;
     const isShowAction = type === 'show' || type === 'open';
     return (
       <div className={ className }
-           onClick={ isShowAction ? this.showDialog.bind(this) : this.closeDialog.bind(this) }>
+           onClick={ isShowAction ? this.showDialog : this.closeDialog }>
         { this.props.children }
       </div>
     );
@@ -69,7 +69,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     showDialog: ( cmpt, data ) => { dispatch(showDialog(cmpt, data)) },
-    closeDialog: () => { dispatch(closeDialog()) }
+    closeDialog: ( isCloseAll ) => { dispatch(closeDialog(isCloseAll)) }
   };
 };
 
