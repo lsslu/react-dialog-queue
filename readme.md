@@ -70,6 +70,22 @@
 
 ### 关闭Dialog
 ```javascript
+// close dialog through DialogTrigger
 <DialogTrigger type="close">close dialog</DialogTrigger>
 <DialogTrigger type="close" all>close all dialog</DialogTrigger>
+
+// close dialog through dispatch an action
+import { closeDialog } from 'react-dialog-queue';
+import { connect } from 'react-redux';
+
+class MyComponent extends React.Component { ... }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    closeDialog: (isCloseAll) => dispatch(closeDialog(isCloseAll))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(MyComponent);
+
 ```
