@@ -1,20 +1,31 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
-import { showDialog, closeDialog } from './action';
+import { showDialog, closeDialog, hideDialog } from './action';
 
 // import './queue.less';
 
 class DialogQueue extends React.Component {
 
-  generate(dialogs) {
-    return dialogs.map((dialog, index) => {
-      const dialogStyle = classNames({
-        'dialog': true,
-        'show': index == dialogs.length - 1,
-        'hide': !(index == dialogs.length - 1)
-      });
+  generate = (dialogs) => {
+    const { animateClass } = this.props;
 
+    return dialogs.map((dialog, index) => {
+      const isFirstDialog = index == dialogs.length - 1;
+      let styleConfig = {
+        'show': isFirstDialog,
+        'hide': !isFirstDialog
+      };
+
+      console.log(animateClass);
+
+      if(animateClass) {
+        styleConfig[animateClass.enter] = !dialog.hide;
+        styleConfig[animateClass.leave] = dialog.hide;
+      }
+
+      const dialogStyle = classNames('dialog', styleConfig);
+      console.log(dialogStyle)
       return React.createElement(dialog.cmpt, {
         key: dialog.name,
         className: dialogStyle,
@@ -22,7 +33,7 @@ class DialogQueue extends React.Component {
       });
 
     });
-  }
+  };
 
   render() {
     const queueStyle = classNames({
@@ -45,7 +56,10 @@ class DialogTrigger extends React.Component {
   };
 
   closeDialog = () => {
-    this.props.closeDialog(!!this.props.all);
+    this.props.hideDialog();
+    setTimeout(() => {
+      this.props.closeDialog(!!this.props.all);
+    }, 300);
   };
 
   render() {
@@ -69,7 +83,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     showDialog: ( cmpt, data ) => { dispatch(showDialog(cmpt, data)) },
-    closeDialog: ( isCloseAll ) => { dispatch(closeDialog(isCloseAll)) }
+    closeDialog: ( isCloseAll ) => { dispatch(closeDialog(isCloseAll)) },
+    hideDialog: () => { dispatch(hideDialog()) }
   };
 };
 
