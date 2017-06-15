@@ -28,7 +28,7 @@ class DialogQueue extends React.Component {
       console.log(dialogStyle)
       return React.createElement(dialog.cmpt, {
         key: dialog.name,
-        className: dialogStyle,
+        $className: dialogStyle,
         ...dialog.data
       });
 
