@@ -11854,15 +11854,12 @@ var DialogQueue = function (_React$Component) {
           'hide': !isFirstDialog
         };
 
-        console.log(animateClass);
-
         if (animateClass) {
           styleConfig[animateClass.enter] = !dialog.hide;
           styleConfig[animateClass.leave] = dialog.hide;
         }
 
         var dialogStyle = (0, _classnames2.default)('dialog', styleConfig);
-        console.log(dialogStyle);
         return _react2.default.createElement(dialog.cmpt, _extends({
           key: dialog.name,
           $className: dialogStyle
@@ -11874,10 +11871,13 @@ var DialogQueue = function (_React$Component) {
   _createClass(DialogQueue, [{
     key: 'render',
     value: function render() {
+      var isShow = this.props.dialog.stack.length > 0;
       var queueStyle = (0, _classnames2.default)({
         'dialog-queue': true,
-        'show': this.props.dialog.stack.length > 0
+        'show': isShow
       });
+
+      document.body.style.overflow = isShow ? 'hidden' : '';
 
       return _react2.default.createElement(
         'div',
