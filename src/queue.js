@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { showDialog, closeDialog, hideDialog } from './action';
@@ -50,6 +51,12 @@ class DialogQueue extends React.Component {
 }
 
 class DialogTrigger extends React.Component {
+  static propTypes = {
+    type: PropTypes.string.isRequired,
+    className: PropTypes.string.isRequired,
+    disabled: PropTypes.bool
+  };
+
   showDialog = () => {
     const { cmpt, data } = this.props;
     this.props.showDialog(cmpt, data);
@@ -63,11 +70,12 @@ class DialogTrigger extends React.Component {
   };
 
   render() {
-    const { type, className, all } = this.props;
+    const { type, className, disabled } = this.props;
     const isShowAction = type === 'show' || type === 'open';
+    const onClick = isShowAction ? this.showDialog : this.closeDialog;
     return (
       <div className={ className }
-           onClick={ isShowAction ? this.showDialog : this.closeDialog }>
+           onClick={ disabled ? null : onClick }>
         { this.props.children }
       </div>
     );
