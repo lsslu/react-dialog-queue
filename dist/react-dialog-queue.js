@@ -11946,7 +11946,7 @@ var DialogTrigger = function (_React$Component2) {
 
 DialogTrigger.propTypes = {
   type: _propTypes2.default.string.isRequired,
-  className: _propTypes2.default.string.isRequired,
+  className: _propTypes2.default.string,
   disabled: _propTypes2.default.bool
 };
 
