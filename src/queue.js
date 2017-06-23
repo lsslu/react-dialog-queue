@@ -53,7 +53,7 @@ class DialogQueue extends React.Component {
 class DialogTrigger extends React.Component {
   static propTypes = {
     type: PropTypes.string.isRequired,
-    className: PropTypes.string.isRequired,
+    className: PropTypes.string,
     disabled: PropTypes.bool
   };
 
