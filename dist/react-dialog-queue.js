@@ -11809,6 +11809,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _reactRedux = require('react-redux');
 
 var _classnames = require('classnames');
@@ -11952,16 +11956,18 @@ var DialogTrigger = function (_React$Component3) {
   _createClass(DialogTrigger, [{
     key: 'render',
     value: function render() {
-      var _props2 = this.props,
-          type = _props2.type,
-          className = _props2.className,
-          all = _props2.all;
+      var _props = this.props,
+          type = _props.type,
+          className = _props.className,
+          all = _props.all;
+          disabled = _props.disabled;
 
       var isShowAction = type === 'show' || type === 'open';
+      var onClick = isShowAction ? this.showDialog : this.closeDialog;
       return _react2.default.createElement(
         'div',
         { className: className,
-          onClick: isShowAction ? this.showDialog : this.closeDialog },
+          onClick: disabled ? null : onClick },
         this.props.children
       );
     }
@@ -11969,6 +11975,13 @@ var DialogTrigger = function (_React$Component3) {
 
   return DialogTrigger;
 }(_react2.default.Component);
+
+DialogTrigger.propTypes = {
+  type: _propTypes2.default.string.isRequired,
+  className: _propTypes2.default.string,
+  disabled: _propTypes2.default.bool
+};
+
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -11996,7 +12009,7 @@ var _d_queue = (0, _reactRedux.connect)(mapStateToProps)(DialogQueue);
 exports.DialogQueue = _d_queue;
 exports.DialogTrigger = _d_trigger;
 
-},{"./action":78,"classnames":1,"react":67,"react-redux":37}],82:[function(require,module,exports){
+},{"./action":78,"classnames":1,"prop-types":26,"react":67,"react-redux":37}],82:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
