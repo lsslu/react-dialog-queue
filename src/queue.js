@@ -5,6 +5,15 @@ import { showDialog, closeDialog, hideDialog } from './action';
 
 // import './queue.less';
 
+class AnimateContainer extends React.Component {
+  render () {
+		const { Cmpt, data, ...others } = this.props;
+
+
+		return <div {...others}><Cmpt {...data} /></div>;
+  }
+}
+
 class DialogQueue extends React.Component {
 
   generate = (dialogs) => {
@@ -23,10 +32,12 @@ class DialogQueue extends React.Component {
       }
 
       const dialogStyle = classNames('dialog', styleConfig);
-      return React.createElement(dialog.cmpt, {
+			// return React.createElement(CmptHoc(dialog.cmpt), {
+      return React.createElement(AnimateContainer, {
         key: dialog.name,
-        $className: dialogStyle,
-        ...dialog.data
+        className: dialogStyle,
+        Cmpt: dialog.cmpt,
+        data: dialog.data
       });
 
     });

@@ -11803,8 +11803,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.DialogTrigger = exports.DialogQueue = undefined;
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
@@ -11821,6 +11819,8 @@ var _action = require('./action');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -11829,13 +11829,41 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 // import './queue.less';
 
-var DialogQueue = function (_React$Component) {
-  _inherits(DialogQueue, _React$Component);
+var AnimateContainer = function (_React$Component) {
+  _inherits(AnimateContainer, _React$Component);
+
+  function AnimateContainer() {
+    _classCallCheck(this, AnimateContainer);
+
+    return _possibleConstructorReturn(this, (AnimateContainer.__proto__ || Object.getPrototypeOf(AnimateContainer)).apply(this, arguments));
+  }
+
+  _createClass(AnimateContainer, [{
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          Cmpt = _props.Cmpt,
+          data = _props.data,
+          others = _objectWithoutProperties(_props, ['Cmpt', 'data']);
+
+      return _react2.default.createElement(
+        'div',
+        others,
+        _react2.default.createElement(Cmpt, data)
+      );
+    }
+  }]);
+
+  return AnimateContainer;
+}(_react2.default.Component);
+
+var DialogQueue = function (_React$Component2) {
+  _inherits(DialogQueue, _React$Component2);
 
   function DialogQueue() {
     var _ref;
 
-    var _temp, _this, _ret;
+    var _temp, _this2, _ret;
 
     _classCallCheck(this, DialogQueue);
 
@@ -11843,8 +11871,8 @@ var DialogQueue = function (_React$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = DialogQueue.__proto__ || Object.getPrototypeOf(DialogQueue)).call.apply(_ref, [this].concat(args))), _this), _this.generate = function (dialogs) {
-      var animateClass = _this.props.animateClass;
+    return _ret = (_temp = (_this2 = _possibleConstructorReturn(this, (_ref = DialogQueue.__proto__ || Object.getPrototypeOf(DialogQueue)).call.apply(_ref, [this].concat(args))), _this2), _this2.generate = function (dialogs) {
+      var animateClass = _this2.props.animateClass;
 
 
       return dialogs.map(function (dialog, index) {
@@ -11860,12 +11888,15 @@ var DialogQueue = function (_React$Component) {
         }
 
         var dialogStyle = (0, _classnames2.default)('dialog', styleConfig);
-        return _react2.default.createElement(dialog.cmpt, _extends({
+        // return React.createElement(CmptHoc(dialog.cmpt), {
+        return _react2.default.createElement(AnimateContainer, {
           key: dialog.name,
-          $className: dialogStyle
-        }, dialog.data));
+          className: dialogStyle,
+          Cmpt: dialog.cmpt,
+          data: dialog.data
+        });
       });
-    }, _temp), _possibleConstructorReturn(_this, _ret);
+    }, _temp), _possibleConstructorReturn(_this2, _ret);
   }
 
   _createClass(DialogQueue, [{
@@ -11890,13 +11921,13 @@ var DialogQueue = function (_React$Component) {
   return DialogQueue;
 }(_react2.default.Component);
 
-var DialogTrigger = function (_React$Component2) {
-  _inherits(DialogTrigger, _React$Component2);
+var DialogTrigger = function (_React$Component3) {
+  _inherits(DialogTrigger, _React$Component3);
 
   function DialogTrigger() {
     var _ref2;
 
-    var _temp2, _this2, _ret2;
+    var _temp2, _this3, _ret2;
 
     _classCallCheck(this, DialogTrigger);
 
@@ -11904,27 +11935,27 @@ var DialogTrigger = function (_React$Component2) {
       args[_key2] = arguments[_key2];
     }
 
-    return _ret2 = (_temp2 = (_this2 = _possibleConstructorReturn(this, (_ref2 = DialogTrigger.__proto__ || Object.getPrototypeOf(DialogTrigger)).call.apply(_ref2, [this].concat(args))), _this2), _this2.showDialog = function () {
-      var _this2$props = _this2.props,
-          cmpt = _this2$props.cmpt,
-          data = _this2$props.data;
+    return _ret2 = (_temp2 = (_this3 = _possibleConstructorReturn(this, (_ref2 = DialogTrigger.__proto__ || Object.getPrototypeOf(DialogTrigger)).call.apply(_ref2, [this].concat(args))), _this3), _this3.showDialog = function () {
+      var _this3$props = _this3.props,
+          cmpt = _this3$props.cmpt,
+          data = _this3$props.data;
 
-      _this2.props.showDialog(cmpt, data);
-    }, _this2.closeDialog = function () {
-      _this2.props.hideDialog();
+      _this3.props.showDialog(cmpt, data);
+    }, _this3.closeDialog = function () {
+      _this3.props.hideDialog();
       setTimeout(function () {
-        _this2.props.closeDialog(!!_this2.props.all);
+        _this3.props.closeDialog(!!_this3.props.all);
       }, 300);
-    }, _temp2), _possibleConstructorReturn(_this2, _ret2);
+    }, _temp2), _possibleConstructorReturn(_this3, _ret2);
   }
 
   _createClass(DialogTrigger, [{
     key: 'render',
     value: function render() {
-      var _props = this.props,
-          type = _props.type,
-          className = _props.className,
-          all = _props.all;
+      var _props2 = this.props,
+          type = _props2.type,
+          className = _props2.className,
+          all = _props2.all;
 
       var isShowAction = type === 'show' || type === 'open';
       return _react2.default.createElement(
