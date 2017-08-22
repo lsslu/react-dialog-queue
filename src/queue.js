@@ -40,8 +40,12 @@ class DialogQueue extends React.Component {
 
 class DialogTrigger extends React.Component {
   showDialog = () => {
-    const { cmpt, data } = this.props;
+    const { cmpt, data, onClick } = this.props;
     this.props.showDialog(cmpt, data);
+
+    if(typeof onClick === 'function') {
+      onClick.call(this);
+    }
   };
 
   closeDialog = () => {
