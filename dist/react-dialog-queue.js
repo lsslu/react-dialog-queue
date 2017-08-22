@@ -11737,7 +11737,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.showDialog = showDialog;
 exports.closeDialog = closeDialog;
-exports.hideDialog = hideDialog;
 
 var _message = require('./message');
 
@@ -11753,12 +11752,6 @@ function closeDialog(isCloseAll) {
   return {
     type: _message.CLOSEDIALOG,
     isCloseAll: isCloseAll
-  };
-}
-
-function hideDialog() {
-  return {
-    type: _message.HIDEDIALOG
   };
 }
 
@@ -11793,7 +11786,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 var SHOWDIALOG = exports.SHOWDIALOG = Symbol('SHOWDIALOG');
 var CLOSEDIALOG = exports.CLOSEDIALOG = Symbol('CLOSEDIALOG');
-var HIDEDIALOG = exports.HIDEDIALOG = Symbol('HIDEDIALOG');
 
 },{}],81:[function(require,module,exports){
 'use strict';
@@ -11803,15 +11795,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.DialogTrigger = exports.DialogQueue = undefined;
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = require('prop-types');
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _reactRedux = require('react-redux');
 
@@ -11823,8 +11813,6 @@ var _action = require('./action');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -11833,86 +11821,38 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 // import './queue.less';
 
-var AnimateContainer = function (_React$Component) {
-  _inherits(AnimateContainer, _React$Component);
-
-  function AnimateContainer() {
-    _classCallCheck(this, AnimateContainer);
-
-    return _possibleConstructorReturn(this, (AnimateContainer.__proto__ || Object.getPrototypeOf(AnimateContainer)).apply(this, arguments));
-  }
-
-  _createClass(AnimateContainer, [{
-    key: 'render',
-    value: function render() {
-      var _props = this.props,
-          Cmpt = _props.Cmpt,
-          data = _props.data,
-          others = _objectWithoutProperties(_props, ['Cmpt', 'data']);
-
-      return _react2.default.createElement(
-        'div',
-        others,
-        _react2.default.createElement(Cmpt, data)
-      );
-    }
-  }]);
-
-  return AnimateContainer;
-}(_react2.default.Component);
-
-var DialogQueue = function (_React$Component2) {
-  _inherits(DialogQueue, _React$Component2);
+var DialogQueue = function (_React$Component) {
+  _inherits(DialogQueue, _React$Component);
 
   function DialogQueue() {
-    var _ref;
-
-    var _temp, _this2, _ret;
-
     _classCallCheck(this, DialogQueue);
 
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this2 = _possibleConstructorReturn(this, (_ref = DialogQueue.__proto__ || Object.getPrototypeOf(DialogQueue)).call.apply(_ref, [this].concat(args))), _this2), _this2.generate = function (dialogs) {
-      var animateClass = _this2.props.animateClass;
-
-
-      return dialogs.map(function (dialog, index) {
-        var isFirstDialog = index == dialogs.length - 1;
-        var styleConfig = {
-          'show': isFirstDialog,
-          'hide': !isFirstDialog
-        };
-
-        if (animateClass) {
-          styleConfig[animateClass.enter] = !dialog.hide;
-          styleConfig[animateClass.leave] = dialog.hide;
-        }
-
-        var dialogStyle = (0, _classnames2.default)('dialog', styleConfig);
-        // return React.createElement(CmptHoc(dialog.cmpt), {
-        return _react2.default.createElement(AnimateContainer, {
-          key: dialog.name,
-          className: dialogStyle,
-          Cmpt: dialog.cmpt,
-          data: dialog.data
-        });
-      });
-    }, _temp), _possibleConstructorReturn(_this2, _ret);
+    return _possibleConstructorReturn(this, (DialogQueue.__proto__ || Object.getPrototypeOf(DialogQueue)).apply(this, arguments));
   }
 
   _createClass(DialogQueue, [{
+    key: 'generate',
+    value: function generate(dialogs) {
+      return dialogs.map(function (dialog, index) {
+        var dialogStyle = (0, _classnames2.default)({
+          'dialog': true,
+          'show': index == dialogs.length - 1,
+          'hide': !(index == dialogs.length - 1)
+        });
+
+        return _react2.default.createElement(dialog.cmpt, _extends({
+          key: dialog.name,
+          className: dialogStyle
+        }, dialog.data));
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var isShow = this.props.dialog.stack.length > 0;
       var queueStyle = (0, _classnames2.default)({
         'dialog-queue': true,
-        'show': isShow
+        'show': this.props.dialog.stack.length > 0
       });
-
-      document.body.style.overflow = isShow ? 'hidden' : '';
 
       return _react2.default.createElement(
         'div',
@@ -11925,48 +11865,49 @@ var DialogQueue = function (_React$Component2) {
   return DialogQueue;
 }(_react2.default.Component);
 
-var DialogTrigger = function (_React$Component3) {
-  _inherits(DialogTrigger, _React$Component3);
+var DialogTrigger = function (_React$Component2) {
+  _inherits(DialogTrigger, _React$Component2);
 
   function DialogTrigger() {
-    var _ref2;
+    var _ref;
 
-    var _temp2, _this3, _ret2;
+    var _temp, _this2, _ret;
 
     _classCallCheck(this, DialogTrigger);
 
-    for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-      args[_key2] = arguments[_key2];
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
     }
 
-    return _ret2 = (_temp2 = (_this3 = _possibleConstructorReturn(this, (_ref2 = DialogTrigger.__proto__ || Object.getPrototypeOf(DialogTrigger)).call.apply(_ref2, [this].concat(args))), _this3), _this3.showDialog = function () {
-      var _this3$props = _this3.props,
-          cmpt = _this3$props.cmpt,
-          data = _this3$props.data;
+    return _ret = (_temp = (_this2 = _possibleConstructorReturn(this, (_ref = DialogTrigger.__proto__ || Object.getPrototypeOf(DialogTrigger)).call.apply(_ref, [this].concat(args))), _this2), _this2.showDialog = function () {
+      var _this2$props = _this2.props,
+          cmpt = _this2$props.cmpt,
+          data = _this2$props.data,
+          onClick = _this2$props.onClick;
 
-      _this3.props.showDialog(cmpt, data);
-    }, _this3.closeDialog = function () {
-      _this3.props.hideDialog();
-      setTimeout(function () {
-        _this3.props.closeDialog(!!_this3.props.all);
-      }, 300);
-    }, _temp2), _possibleConstructorReturn(_this3, _ret2);
+      _this2.props.showDialog(cmpt, data);
+
+      if (typeof onClick === 'function') {
+        onClick.call(_this2);
+      }
+    }, _this2.closeDialog = function () {
+      _this2.props.closeDialog(!!_this2.props.all);
+    }, _temp), _possibleConstructorReturn(_this2, _ret);
   }
 
   _createClass(DialogTrigger, [{
     key: 'render',
     value: function render() {
-      var _props2 = this.props,
-          type = _props2.type,
-          className = _props2.className,
-          disabled = _props2.disabled;
+      var _props = this.props,
+          type = _props.type,
+          className = _props.className,
+          all = _props.all;
 
       var isShowAction = type === 'show' || type === 'open';
-      var onClick = isShowAction ? this.showDialog : this.closeDialog;
       return _react2.default.createElement(
         'div',
         { className: className,
-          onClick: disabled ? null : onClick },
+          onClick: isShowAction ? this.showDialog : this.closeDialog },
         this.props.children
       );
     }
@@ -11974,13 +11915,6 @@ var DialogTrigger = function (_React$Component3) {
 
   return DialogTrigger;
 }(_react2.default.Component);
-
-DialogTrigger.propTypes = {
-  type: _propTypes2.default.string.isRequired,
-  className: _propTypes2.default.string,
-  disabled: _propTypes2.default.bool
-};
-
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -11995,9 +11929,6 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     closeDialog: function closeDialog(isCloseAll) {
       dispatch((0, _action.closeDialog)(isCloseAll));
-    },
-    hideDialog: function hideDialog() {
-      dispatch((0, _action.hideDialog)());
     }
   };
 };
@@ -12008,7 +11939,7 @@ var _d_queue = (0, _reactRedux.connect)(mapStateToProps)(DialogQueue);
 exports.DialogQueue = _d_queue;
 exports.DialogTrigger = _d_trigger;
 
-},{"./action":78,"classnames":1,"prop-types":26,"react":67,"react-redux":37}],82:[function(require,module,exports){
+},{"./action":78,"classnames":1,"react":67,"react-redux":37}],82:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -12031,12 +11962,11 @@ function dialog() {
   switch (action.type) {
     case _message.SHOWDIALOG:
       {
-        var newStack = state.get('stack').push((0, _immutable.fromJS)({
+        var newStack = state.get('stack').push({
           cmpt: action.cmpt,
           name: createRandID(),
-          data: action.data,
-          hide: false
-        }));
+          data: action.data
+        });
         return state.set('stack', newStack);
       }
 
@@ -12046,13 +11976,6 @@ function dialog() {
           return state.set('stack', (0, _immutable.List)());
         }
         return state.set('stack', state.get('stack').pop());
-      }
-
-    case _message.HIDEDIALOG:
-      {
-        var stack = state.get('stack');
-        var _dialog = stack.last();
-        return state.set('stack', stack.setIn([stack.size - 1], _dialog.set('hide', true)));
       }
 
     default:
