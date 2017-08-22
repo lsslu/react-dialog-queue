@@ -68,12 +68,12 @@ class DialogTrigger extends React.Component {
     disabled: PropTypes.bool
   };
 
-  showDialog = () => {
+  showDialog = (e) => {
     const { cmpt, data, onClick } = this.props;
     this.props.showDialog(cmpt, data);
 
     if(typeof onClick === 'function') {
-      onClick.call(this);
+      onClick.call(this, e);
     }
   };
 
