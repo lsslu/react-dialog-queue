@@ -11768,7 +11768,7 @@ function hideDialog() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.closeDialog = exports.DialogTrigger = exports.DialogQueue = exports.dialogReducer = undefined;
+exports.hideDialog = exports.showDialog = exports.closeDialog = exports.DialogTrigger = exports.DialogQueue = exports.dialogReducer = undefined;
 
 var _reducer = require('./reducer');
 
@@ -11784,6 +11784,8 @@ exports.dialogReducer = _reducer2.default;
 exports.DialogQueue = _queue.DialogQueue;
 exports.DialogTrigger = _queue.DialogTrigger;
 exports.closeDialog = _action.closeDialog;
+exports.showDialog = _action.showDialog;
+exports.hideDialog = _action.hideDialog;
 
 },{"./action":78,"./queue":81,"./reducer":82}],80:[function(require,module,exports){
 'use strict';
