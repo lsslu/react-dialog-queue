@@ -1,10 +1,12 @@
 import dialogReducer from './reducer';
 import { DialogQueue, DialogTrigger } from './queue';
-import { closeDialog } from './action';
+import { closeDialog, showDialog, hideDialog } from './action';
 
 export {
   dialogReducer,
   DialogQueue,
   DialogTrigger,
-  closeDialog
+  closeDialog,
+  showDialog,
+  hideDialog
 };
